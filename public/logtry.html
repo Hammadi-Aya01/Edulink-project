@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="style1.css"></head>
+<body>
+    <div class="container" id="container">
+     <div class="form-container register-container">
+      <form action="process_auth.php" method="post">
+        <input type="text" placeholder="name" class="e1" name="name" required>
+        <input type="email" placeholder="Email" class="e1" name="email" required>
+        <input type="password" placeholder="Password" class="e1" name="password" required>
+        <button name="register">Register</button>
+      </form>
+      
+     </div>
+     <div class="form-container login-container">
+      <form action="process_auth.php" method="post">
+         <h1>Login here </h1>
+         <input type="email" placeholder="Email" class="e1" name="email" required>
+         <input type="password" placeholder="Password" class="e1" name="password" required>         
+          <div class="content">
+           <div class="checkbox">
+              <input type="checkbox" name="checkbox" id="checkbox">
+             <label >Remember me</label>
+           </div>
+           <div class="pass-link">
+             <a onclick="window.location.href='motp.html'">Forgot password ?</a>
+           </div>
+         </div>
+         <button name="login">Login</button>
+          <div class="social-container">
+         </div>
+       </form>
+     </div>
+     <div class="overlay-container">
+        <div class="overlay">
+         <div class="ovrelay-panel overlay-left">
+            <h1 class="title">Welcome ! </h1>
+           <p>if you have an account, login here </p>
+            <button class="ghost" id="login">Login
+            <i class="lin lni-arrow-left login"></i></button>
+         </div>
+         <div class="overlay-panel overlay-right">
+            <h1 class="title" >Join here</h1>
+            <p>if you don't have an account yet, join us  </p>
+          <button class="ghost" id="register" onclick="window.location.href='inscriptiontry.html'">Register
+            <i class="lin lni-arrow-right register"></i></button>
+           
+         </div>
+    
+     
+ 

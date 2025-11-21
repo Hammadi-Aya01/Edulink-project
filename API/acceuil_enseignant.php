@@ -1,0 +1,131 @@
+<?php
+session_start();
+if (!isset($_SESSION['user_id']) || $_SESSION['user_role'] !== 'enseignant') {
+    header("Location: login.php");
+    exit();
+}
+
+$conn = new mysqli("localhost", "root", "", "edulink");
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
+}
+
+$id = $_SESSION['user_id'];
+$stmt = $conn->prepare("SELECT name FROM users WHERE id = ?");
+$stmt->bind_param("i", $id);
+$stmt->execute();
+$user = $stmt->get_result()->fetch_assoc();
+?>
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title>Accueil Enseignant</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    /* CSS inchangé */
+    * { margin:0; padding:0; box-sizing:border-box; }
+    body { font-family:'Segoe UI',sans-serif; background:#f5f6fa; color:#2c3e50; }
+    #sidebarToggle{display:none;}
+    .sidebar{width:60px;background:#2c3e50;height:100vh;padding-top:60px;position:fixed;top:0;left:0;transition:width .3s;z-index:10;}
+    .sidebar a{display:flex;align-items:center;padding:15px;color:white;text-decoration:none;}
+    .sidebar a i{margin-right:10px;font-size:18px;min-width:24px;}
+    .link-text{display:none;}
+    #sidebarToggle:checked ~ .sidebar{width:260px;}
+    #sidebarToggle:checked ~ .sidebar .link-text{display:inline;}
+    .menu-btn{position:fixed;left:10px;top:10px;background:none;border:none;color:white;font-size:22px;cursor:pointer;z-index:100;}
+    .topnav{position:fixed;top:0;left:60px;right:0;height:60px;background:#2c3e50;display:flex;align-items:center;justify-content:space-between;padding:0 30px;color:white;z-index:5;transition:left .3s;}
+    #sidebarToggle:checked ~ .topnav{left:260px;}
+    .topnav .menu a{color:white;text-decoration:none;font-weight:bold;display:flex;align-items:center;gap:8px;}
+    .profile{position:relative;}
+    .profile-icon{font-size:32px;color:white;cursor:pointer;}
+    .dropdown{display:none;position:absolute;right:0;top:48px;background:white;border:1px solid #ccc;border-radius:6px;list-style:none;padding:10px 0;min-width:200px;box-shadow:0 2px 6px rgba(0,0,0,0.15);z-index:20;}
+    .dropdown.show{display:block;}
+    .dropdown li{padding:10px 20px;}
+    .dropdown li:hover{background:rgba(0,0,0,0.05);}
+    .dropdown a, .dropdown button{color:#2c3e50;text-decoration:none;font-size:15px;display:flex;align-items:center;gap:8px;background:none;border:none;width:100%;text-align:left;cursor:pointer;}
+    .main{margin-left:60px;margin-top:80px;padding:20px;transition:margin-left .3s;}
+    #sidebarToggle:checked ~ .main{margin-left:260px;}
+    .cards{display:flex;gap:20px;margin-bottom:30px;flex-wrap:wrap;}
+    .card{flex:1;min-width:180px;background:white;padding:20px;border-radius:10px;box-shadow:0 2px 6px rgba(0,0,0,0.1);display:flex;flex-direction:column;align-items:center;gap:10px;text-align:center;}
+    .card i{font-size:28px;color:#2c3e50;}
+    .card h4{font-size:16px;margin:0;}
+    .card a{margin-top:auto;color:#2c3e50;text-decoration:none;font-weight:bold;}
+    table{width:100%;border-collapse:collapse;background:white;border-radius:10px;overflow:hidden;box-shadow:0 2px 6px rgba(0,0,0,0.1);}    th,td{padding:12px;text-align:left;border-bottom:1px solid #ddd;}    th{background:#2c3e50;color:white;}    tr:hover{background:rgba(0,0,0,0.03);}  </style>
+</head>
+<body>
+  <input type="checkbox" id="sidebarToggle">
+  <label for="sidebarToggle" class="menu-btn"><i class="fas fa-bars"></i></label>
+  <div class="sidebar">
+    <a href="acceuil_enseignant.php"><i class="fas fa-home"></i><span class="link-text">Accueil</span></a>
+    <a href="series.php"><i class="fas fa-list"></i><span class="link-text">Séries</span></a>
+    <a href="exercices.php"><i class="fas fa-pencil-alt"></i><span class="link-text">Exercices</span></a>
+  </div>
+  <div class="topnav">
+    <div class="menu">
+      <a href="acceuil_enseignant.php"><i class="fas fa-home"></i> Accueil</a>
+    </div>
+    <div class="profile">
+      <i class="fas fa-user-circle profile-icon"></i>
+      <ul class="dropdown" id="profileDropdown">
+        <li><a href="profil_enseignant.php"><i class="fas fa-edit"></i> <?= htmlspecialchars($user['name']); ?></a></li>
+        <li><a href="logout.php"><i class="fas fa-sign-out-alt"></i> Déconnexion</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="main">
+    <div class="cards">
+      <div class="card">
+        <i class="fas fa-chalkboard-teacher"></i>
+        <h4>Mes Cours</h4>
+        <a href="my_courses.php">Voir</a>
+      </div>
+      <div class="card">
+        <i class="fas fa-calendar-alt"></i>
+        <h4>Planifier un Cours</h4>
+        <a href="schedule_course.php">Planifier</a>
+      </div>
+      <div class="card">
+        <i class="fas fa-envelope"></i>
+        <h4>Messages Étudiants</h4>
+        <a href="chat.php">Accéder</a>
+      </div>
+      <div class="card">
+        <i class="fas fa-list"></i>
+        <h4>Séries de Cours</h4>
+        <a href="series.php">Voir</a>
+      </div>
+      <div class="card">
+        <i class="fas fa-pencil-alt"></i>
+        <h4>Séries d'Exercices</h4>
+        <a href="exercices.php">Voir</a>
+      </div>
+    </div>
+    <h3>Prochains Cours</h3>
+    <table>
+      <thead>
+        <tr><th>Cours</th><th>Date & Heure</th><th>Salle</th><th>Actions</th></tr>
+      </thead>
+      <tbody>
+        <?php
+        $res = $conn->query("SELECT titre, date_time, salle FROM cours WHERE enseignant_id = $id");
+        while($row = $res->fetch_assoc()){
+            echo "<tr><td>".htmlspecialchars($row['titre'])."</td>".
+                 "<td>".htmlspecialchars($row['date_time'])."</td>".
+                 "<td>".htmlspecialchars($row['salle'])."</td>".
+                 "<td><a href='edit_cours.php?id=".$row['id']."'>Modifier</a> | <a href='cancel_cours.php?id=".$row['id']."'>Annuler</a></td></tr>";
+        }
+        ?>
+      </tbody>
+    </table>
+  </div>
+  <script>
+    const icon=document.querySelector('.profile-icon');
+    const dd=document.getElementById('profileDropdown');
+    icon.addEventListener('click',e=>{e.stopPropagation();dd.classList.toggle('show');});
+    document.addEventListener('click',e=>{if(!e.target.closest('.profile'))dd.classList.remove('show');});
+  </script>
+</body>
+</html>
+<?php $conn->close(); ?>

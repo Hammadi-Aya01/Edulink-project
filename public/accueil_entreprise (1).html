@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title>Accueil Entreprise</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    :root {
+      --bg-color: #f5f6fa;
+      --text-color: #2c3e50;
+      --sidebar-bg: #2c3e50;
+      --nav-bg: #2c3e50;
+      --card-bg: #ffffff;
+      --icon-color: #3498db;
+    }
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background-color: var(--bg-color);
+      color: var(--text-color);
+      transition: background-color 0.3s, color 0.3s;
+    }
+    body.dark-mode {
+      --bg-color: #2c3e50;
+      --text-color: #ecf0f1;
+      --sidebar-bg: #1a252f;
+      --nav-bg: #1a252f;
+      --card-bg: #34495e;
+      --icon-color: #2980b9;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    a { text-decoration: none; }
+    #sidebarToggle{display:none;}
+    .sidebar{width:60px;background:#2c3e50;height:100vh;padding-top:60px;position:fixed;top:0;left:0;transition:width .3s;z-index:10;}
+    .sidebar a{display:flex;align-items:center;padding:15px;color:white;text-decoration:none;}
+    .sidebar a i{margin-right:10px;font-size:18px;min-width:24px;}
+    .link-text{display:none;}
+    #sidebarToggle:checked ~ .sidebar{width:260px;}
+    #sidebarToggle:checked ~ .sidebar .link-text{display:inline;}
+    .menu-btn{position:fixed;left:10px;top:10px;background:none;border:none;color:white;font-size:22px;cursor:pointer;z-index:100;}
+    .topnav{position:fixed;top:0;left:60px;right:0;height:60px;background:#2c3e50;display:flex;align-items:center;justify-content:space-between;padding:0 30px;color:white;z-index:5;transition:left .3s;}
+    #sidebarToggle:checked ~ .topnav{left:260px;}
+    .topnav .menu a{color:white;text-decoration:none;font-weight:bold;display:flex;align-items:center;gap:8px;}
+    .profile { position: relative; }
+    .profile-icon { font-size: 32px; color: white; cursor: pointer; }
+    .dropdown { display: none; position: absolute; right: 0; top: 48px; background-color: var(--card-bg); border: 1px solid #ccc; border-radius: 6px; padding: 10px 0; min-width: 200px; box-shadow: 0 2px 6px rgba(0,0,0,0.15); }
+    .dropdown.show { display: block; }
+    .dropdown li { padding: 10px 20px; }
+    .dropdown li:hover { background-color: rgba(0,0,0,0.05); }
+    .main { margin-left: 60px; margin-top: 80px; padding: 20px; transition: margin-left 0.3s; }
+    #sidebarToggle:checked ~ .main { margin-left: 220px; }
+    .cards { display: flex; gap: 20px; margin-bottom: 30px; }
+    .card { flex: 1; background-color: var(--card-bg); padding: 20px; border-radius: 10px; box-shadow: 0 2px 6px rgba(0,0,0,0.1); text-align: center; display: flex; flex-direction: column; justify-content: space-between; }
+    .card i { font-size: 24px; margin-bottom: 10px; color: var(--icon-color); }
+    .card h4 { margin-bottom: 10px; color: var(--text-color); }
+    .card a { margin-top: auto; color: var(--text-color); font-weight: bold; }
+    table { width: 100%; border-collapse: collapse; background-color: var(--card-bg); }
+    th, td { padding: 12px; text-align: left; border-bottom: 1px solid #ddd; }
+    th { background-color: var(--nav-bg); color: white; }
+    tr:hover { background-color: rgba(0,0,0,0.03); }
+  </style>
+</head>
+<body>
+  <input type="checkbox" id="sidebarToggle">
+  <label for="sidebarToggle" class="menu-btn"><i class="fas fa-bars"></i></label>
+  <div class="sidebar">
+    <a href="Stage.html"><i class="fas fa-briefcase"></i><span class="link-text">Stages</span></a>
+    <a href="Emploi.html"><i class="fas fa-clipboard-list"></i><span class="link-text">Emplois</span></a>
+    <a href="Candidats.html"><i class="fas fa-users"></i><span class="link-text">Candidats</span></a>
+  </div>
+  <div class="topnav">
+    <div class="menu">
+      <a href="acceuil_entreprise.html"><i class="fas fa-home"></i> Accueil</a>
+    </div>
+    <div class="profile">
+      <i class="fas fa-user-circle profile-icon"></i>
+      <ul class="dropdown" id="profileDropdown">
+        <li><a href="profile_entreprise.html"><i class="fas fa-building"></i> Mon Profil</a></li>
+        <li><button onclick="openSettings()"><i class="fas fa-cog"></i> Paramètres</button></li>
+        <li><button id="theme-toggle-btn" class="theme-btn"><i class="fas fa-moon"></i> Mode Sombre</button></li>
+        <li><a href="logout.php"><i class="fas fa-sign-out-alt"></i> Déconnexion</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="main">
+    <div class="cards">
+      <div class="card">
+        <i class="fas fa-plus-circle"></i>
+        <h4>Nouvelle Offre Stage</h4>
+        <a href="create_stage.html">Créer</a>
+      </div>
+      <div class="card">
+        <i class="fas fa-plus-circle"></i>
+        <h4>Nouvelle Offre Emploi</h4>
+        <a href="create_emploi.html">Créer</a>
+      </div>
+      <div class="card">
+        <i class="fas fa-plus-circle"></i>
+        <h4>Événements</h4>
+        <a href="event.html">Créer</a>
+      </div>
+      <div class="card">
+        <i class="fas fa-chart-bar"></i>
+        <h4>Statistiques</h4>
+        <a href="stats.html">Voir</a>
+      </div>
+    </div>
+    <h3>Offres récentes</h3>
+    <table>
+      <thead>
+        <tr><th>Titre</th><th>Type</th><th>Date de publication</th><th>Statut</th><th>Actions</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Développeur Web</td><td>Emploi</td><td>20/04/2025</td><td>Actif</td><td><a href="#">Éditer</a> | <a href="#">Supprimer</a></td></tr>
+        <tr><td>Stage Marketing</td><td>Stage</td><td>18/04/2025</td><td>Fermé</td><td><a href="#">Éditer</a> | <a href="#">Supprimer</a></td></tr>
+      </tbody>
+    </table>
+  </div>
+  <script>
+    const profileIcon = document.querySelector('.profile-icon');
+    const dropdown = document.getElementById('profileDropdown');
+    profileIcon.addEventListener('click', e => { e.stopPropagation(); dropdown.classList.toggle('show'); });
+    document.addEventListener('click', e => { if (!e.target.closest('.profile')) dropdown.classList.remove('show'); });
+    function openSettings() { alert('Ouvrir paramètres'); }
+    const themeBtn = document.getElementById('theme-toggle-btn');
+    themeBtn.addEventListener('click', () => {
+      document.body.classList.toggle('dark-mode');
+      themeBtn.innerHTML = document.body.classList.contains('dark-mode')
+        ? '<i class="fas fa-sun"></i> Mode Clair'
+        : '<i class="fas fa-moon"></i> Mode Sombre';
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title>Examens</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      margin: 0;
+      padding: 0;
+      background: #f5f6fa;
+    }
+
+    header {
+      background-color: #2c3e50;
+      color: white;
+      padding: 20px;
+      text-align: center;
+    }
+
+    .container {
+      max-width: 1000px;
+      margin: 30px auto;
+      padding: 20px;
+      background-color: white;
+      border-radius: 10px;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    select, input[type="file"], button, input[type="date"] {
+      padding: 10px;
+      margin: 10px 0;
+      width: 100%;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+    }
+
+    button {
+      background-color: #2c3e50;
+      color: white;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #34495e;
+    }
+
+    .section {
+      margin-top: 30px;
+    }
+
+    .section h3 {
+      margin-bottom: 10px;
+      color: #2c3e50;
+    }
+
+    ul {
+      list-style: none;
+      padding: 0;
+    }
+
+    ul li {
+      padding: 10px;
+      border-bottom: 1px solid #ddd;
+    }
+
+    ul li:last-child {
+      border-bottom: none;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>📈 Espace Examens</h1>
+  </header>
+
+  <div class="container">
+
+    <!-- FILTRES -->
+    <div>
+      <h3>🔢 Filtrer les examens</h3>
+      <select id="anneeSelect">
+        <option value="">-- Année scolaire --</option>
+        <option value="1">1ère année</option>
+        <option value="2">2ème année</option>
+        <option value="3">3ème année</option>
+      </select>
+
+      <select id="sectionSelect">
+        <option value="">-- Section --</option>
+        <option value="info">Informatique</option>
+        <option value="indus">Industriel</option>
+      </select>
+
+      <select id="matiereSelect">
+        <option value="">-- Matière --</option>
+      </select>
+    </div>
+
+    <!-- AFFICHAGE DES EXAMENS -->
+    <div class="section">
+      <h3>📅 Liste des examens</h3>
+      <ul id="examList">
+        <li>Sélectionnez une année, une section et une matière</li>
+      </ul>
+    </div>
+
+    <!-- FORMULAIRE DE PUBLICATION -->
+    <div class="section">
+      <h3>✍️ Publier un examen</h3>
+      <form>
+        <select required>
+          <option value="">-- Année scolaire --</option>
+          <option value="1">1ère année</option>
+          <option value="2">2ème année</option>
+          <option value="3">3ème année</option>
+        </select>
+
+        <select required>
+          <option value="">-- Section --</option>
+          <option value="info">Informatique</option>
+          <option value="indus">Industriel</option>
+        </select>
+
+        <select required>
+          <option value="">-- Matière --</option>
+          <option>Math</option>
+          <option>Algorithmique</option>
+          <option>Électronique</option>
+        </select>
+
+        <input type="date" required>
+        <input type="file" required>
+        <button type="submit">Publier</button>
+      </form>
+    </div>
+
+  </div>
+
+  <script>
+    const matieres = {
+      "1_info": ["Math", "Algorithmique", "Électrotechnique"],
+      "2_info": ["POO", "Base de Données", "Web"],
+      "3_info": ["IA", "Big Data", "Sécurité SI"],
+      "1_indus": ["Math", "Mécanique", "Chimie"],
+      "2_indus": ["Automatique", "Électrotechnique", "Matériaux"],
+      "3_indus": ["Contrôle", "Robotique", "Production"]
+    };
+
+    const anneeSelect = document.getElementById("anneeSelect");
+    const sectionSelect = document.getElementById("sectionSelect");
+    const matiereSelect = document.getElementById("matiereSelect");
+    const examList = document.getElementById("examList");
+
+    function updateMatieres() {
+      const key = `${anneeSelect.value}_${sectionSelect.value}`;
+      matiereSelect.innerHTML = `<option value="">-- Matière --</option>`;
+      if (matieres[key]) {
+        matieres[key].forEach(m => {
+          const opt = document.createElement("option");
+          opt.value = m;
+          opt.textContent = m;
+          matiereSelect.appendChild(opt);
+        });
+      }
+      examList.innerHTML = `<li>Sélectionnez une année, une section et une matière</li>`;
+    }
+
+    function showExamens() {
+      const matiere = matiereSelect.value;
+      if (matiere) {
+        examList.innerHTML = `
+          <li><strong>${matiere}</strong> - Examen de contrôle</li>
+          <li><strong>${matiere}</strong> - Examen principal</li>
+        `;
+      }
+    }
+
+    anneeSelect.addEventListener("change", updateMatieres);
+    sectionSelect.addEventListener("change", updateMatieres);
+    matiereSelect.addEventListener("change", showExamens);
+  </script>
+
+</body>
+</html>

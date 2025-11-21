@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script>
+        function redirectToPage() {
+            var userType = document.getElementById("userType").value;
+            if (userType === "etudiant") {
+                window.location.href = "inscription1_etudiant.html";
+            } else if (userType === "enseignant") {
+                window.location.href = "inscription1_enseignant.html";
+            } else if (userType === "entreprise") {
+                window.location.href = "inscription1_entreprise.html";
+            }
+        }
+    </script>
+    <link rel="stylesheet" href="styleinsc.css">
+</head>
+<body>
+    <div class="container">
+        <h2>What are u ? </h2>
+        <label for="userType"></label>
+        <br>
+        <select id="userType">
+            <option value="etudiant" id="kk">Étudiant</option>
+            <option value="enseignant" id="kk">Enseignant</option>
+            <option value="entreprise" id="kk">Entreprise</option>
+        </select>
+        <br>
+        <button onclick="redirectToPage()">S'inscrire</button>
+    </div>
+</body>
+</html>

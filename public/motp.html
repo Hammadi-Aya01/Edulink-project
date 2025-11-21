@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Forgot Password</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(to right, #2c3e50, #4ca1af);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        *{
+           box-sizing: border-box;}
+        .container {
+            background: white;
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            text-align: center;
+            width: 400px;
+            animation: fadeIn 0.8s ease-in-out;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        h1 {
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 15px;
+            text-shadow: 0 0 10px rgba(16, 64, 74, 0.5);
+        }
+        p {
+            color: #555;
+            margin-bottom: 20px;
+        }
+        form {
+            display: flex;
+            flex-direction: column;
+        }
+        input {
+           background-color:  #eee;
+           border-radius: 10px;
+           border: none;
+           padding: 12px 15px;
+           margin: 8px 0;
+           width: 100%;
+           transition: all 0.3s ease;
+        }
+        input:focus {
+            border-color: #1a73e8;
+            outline: none;
+            box-shadow: 0 0 8px rgba(26, 115, 232, 0.5);
+        }
+        button {
+             position: relative;
+             border-radius: 20px;
+             border: 1px solid#4bb6b7;
+             background-color: #4bb6b7;
+             color:#fff;
+             font-size: 15px;
+             font-weight: 700;
+             margin: 10px;
+             padding: 12px 80px;
+             letter-spacing: 1px;
+             text-transform: capitalize;
+            transition: 0.3s ease-in-out;
+            transition: all 0.3s ease;
+        }
+        button:hover {
+            transform: scale(1.05);
+            background: linear-gradient(to right, #6a11cb, #2575fc);
+            box-shadow: 0 4px 15px rgba(106, 17, 203, 0.3);
+        }
+        #success-message, #error-message {
+            margin-top: 15px;
+            font-weight: bold;
+        }
+        #success-message {
+            color: green;
+        }
+        #error-message {
+            color: red;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Forgot Password</h1>
+        <p>Enter your email to reset your password.</p>
+        <form id="forgotPasswordForm">
+            <input type="email" id="email" placeholder="Email" required>
+            <button type="submit">Send</button>
+            <button type="button" onclick="window.location.href='logtry.html'">Back to Login</button>
+        </form>
+        <p id="success-message" style="display: none;">A reset email has been sent.</p>
+        <p id="error-message" style="display: none;">Please enter a valid email address.</p>
+    </div>
+
+    <script>
+        document.getElementById("forgotPasswordForm").addEventListener("submit", function(event) {
+            event.preventDefault();
+            let email = document.getElementById("email").value;
+            let successMessage = document.getElementById("success-message");
+            let errorMessage = document.getElementById("error-message");
+
+            if (email.trim() === "" || !email.includes("@")) {
+                errorMessage.style.display = "block";
+                successMessage.style.display = "none";
+            } else {
+                errorMessage.style.display = "none";
+                successMessage.style.display = "block";
+            }
+        });
+    </script>
+</body>
+</html>
+
